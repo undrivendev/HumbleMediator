@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumbleMediator", "src\HumbleMediator.csproj", "{48A33C0A-3376-4179-8E78-7B93DFA0CAA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumbleMediator.Tests", "test\HumbleMediator.Tests\HumbleMediator.Tests.csproj", "{DA668C6A-CA6A-4A26-87AE-258438A46BB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{713EEB24-30F6-463B-AD87-477E31AD472C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{48A33C0A-3376-4179-8E78-7B93DFA0CAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48A33C0A-3376-4179-8E78-7B93DFA0CAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48A33C0A-3376-4179-8E78-7B93DFA0CAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA668C6A-CA6A-4A26-87AE-258438A46BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA668C6A-CA6A-4A26-87AE-258438A46BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA668C6A-CA6A-4A26-87AE-258438A46BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA668C6A-CA6A-4A26-87AE-258438A46BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA668C6A-CA6A-4A26-87AE-258438A46BB3} = {713EEB24-30F6-463B-AD87-477E31AD472C}
 	EndGlobalSection
 EndGlobal
