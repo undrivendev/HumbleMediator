@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\HumbleMediator.csproj" />
+      <ProjectReference Include="..\src\HumbleMediator.csproj" />
     </ItemGroup>
 
 </Project>
