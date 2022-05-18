@@ -3,12 +3,39 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  
+variables:
+  buildConfiguration: 'Release'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: BuildAndTest
+  jobs:
+  - job: BuildAndTestJob
+    steps:
+    - script: |
+        dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
+      displayName: 'Build ($(buildConfiguration))'
+    - script: |
+        dotnet test HumbleMediator.sln \
+          --configuration $(buildConfiguration) \
+          --no-build \
+          --verbosity Normal \
+          --logger trx
+      displayName: 'Run tests'
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
+      displayName: 'Publish test results'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: DeployToNuGet
+  jobs:
+  - job: DeployJob
+    pool: server
+    steps:
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: |
+          luca.dallavalle@outlook.com
+          
