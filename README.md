@@ -1,5 +1,5 @@
 # HumbleMediator
-HumbleMediator is a simple library (~50 lines of code) containing the minimum about of abstractions/boilerplate code to implement a functioning Mediator pattern implementation for CQRS.
+HumbleMediator is a simple library (~50 lines of code) containing the minimum amount of abstractions/boilerplate code to implement a functioning Mediator pattern implementation for CQRS.
 It is specifically designed to sit on top of a Dependency Injection Container, so if you're not using one in your project (probably you should) this is not for you. 
 
 ## Like it? Give a star! :star:
