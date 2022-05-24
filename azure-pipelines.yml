@@ -17,17 +17,13 @@ steps:
 - script: |
     dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
   displayName: 'Build ($(buildConfiguration))'
-- script: |
-    dotnet test HumbleMediator.sln \
-      --configuration $(buildConfiguration) \
-      --no-build \
-      --verbosity Normal \
-      --logger trx
-  displayName: 'Run tests'
-# Publish results
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
+- task: VSTest@2
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-  displayName: 'Publish test results'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    codeCoverageEnabled: true
+    configuration: '$(buildConfiguration)'
