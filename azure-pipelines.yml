@@ -13,7 +13,7 @@ stages:
   - job: BuildAndTestJob
     steps:
     - script: |
-        dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
+        dotnet build HumbleMediator.sln --configuration $(buildConfiguration) -warnaserror
       displayName: 'Build ($(buildConfiguration))'
     - script: |
         dotnet test HumbleMediator.sln \
@@ -28,14 +28,20 @@ stages:
         testRunner: VSTest
         testResultsFiles: '**/*.trx'
       displayName: 'Publish test results'
-
-- stage: DeployToNuGet
-  jobs:
-  - job: DeployJob
-    pool: server
-    steps:
-    - task: ManualValidation@0
+    - script: |
+        rm -rf ./dist/ && dotnet pack ./src/HumbleMediator.csproj \
+          -c $(buildConfiguration) \
+          --include-symbols \
+          --no-build \
+          -o ./dist/
+      displayName: 'Create build artifact'
+    - task: CopyFiles@2
       inputs:
-        notifyUsers: |
-          luca.dallavalle@outlook.com
+        contents: './dist/*.nupkg'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: NuGet
+
           
