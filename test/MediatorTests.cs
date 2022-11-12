@@ -13,11 +13,11 @@ public class MediatorTests
     public async Task SendQuery_ShouldResolveAndHandle()
     {
         // Arrange
-        var expectedResult = 66;
+        const int expectedResult = 66;
         var query = new QueryStub();
         var mockHandler = new Mock<IQueryHandler<QueryStub, int>>();
         mockHandler.Setup(e => e.Handle(query, default)).ReturnsAsync(expectedResult);
-        
+
         var container = new Mock<IContainer>();
         container.Setup(e => e.Resolve<IQueryHandler<QueryStub, int>>())
             .Returns(mockHandler.Object);
@@ -41,7 +41,7 @@ public class MediatorTests
         var command = new CommandStub();
         var mockHandler = new Mock<ICommandHandler<CommandStub, int>>();
         mockHandler.Setup(e => e.Handle(command, default)).ReturnsAsync(expectedResult);
-        
+
         var container = new Mock<IContainer>();
         container.Setup(e => e.Resolve<ICommandHandler<CommandStub, int>>())
             .Returns(mockHandler.Object);
