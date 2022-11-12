@@ -1,5 +1,3 @@
 namespace HumbleMediator;
 
-public interface IQuery<T>
-{
-}
+public interface IQuery<T> { }

@@ -19,7 +19,8 @@ public class MediatorTests
         mockHandler.Setup(e => e.Handle(query, default)).ReturnsAsync(expectedResult);
 
         var container = new Mock<IContainer>();
-        container.Setup(e => e.Resolve<IQueryHandler<QueryStub, int>>())
+        container
+            .Setup(e => e.Resolve<IQueryHandler<QueryStub, int>>())
             .Returns(mockHandler.Object);
 
         var sut = new Mediator(container.Object);
@@ -43,7 +44,8 @@ public class MediatorTests
         mockHandler.Setup(e => e.Handle(command, default)).ReturnsAsync(expectedResult);
 
         var container = new Mock<IContainer>();
-        container.Setup(e => e.Resolve<ICommandHandler<CommandStub, int>>())
+        container
+            .Setup(e => e.Resolve<ICommandHandler<CommandStub, int>>())
             .Returns(mockHandler.Object);
 
         var sut = new Mediator(container.Object);
@@ -53,7 +55,10 @@ public class MediatorTests
 
         // Assert
         container.Verify(e => e.Resolve<ICommandHandler<CommandStub, int>>(), Times.Once);
-        mockHandler.Verify(e => e.Handle(It.Is<CommandStub>(f => f == command), default), Times.Once);
+        mockHandler.Verify(
+            e => e.Handle(It.Is<CommandStub>(f => f == command), default),
+            Times.Once
+        );
         result.Should().Be(expectedResult);
     }
 }

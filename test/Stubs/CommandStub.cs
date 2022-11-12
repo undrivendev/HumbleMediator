@@ -1,5 +1,3 @@
 namespace HumbleMediator.Tests.Stubs;
 
-public class CommandStub : ICommand<int>
-{
-}
+public class CommandStub : ICommand<int> { }
