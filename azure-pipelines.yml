@@ -29,16 +29,12 @@ stages:
         testResultsFiles: '**/*.trx'
       displayName: 'Publish test results'
     - script: |
-        rm -rf ./dist/ && dotnet pack ./src/HumbleMediator.csproj \
+        dotnet pack ./src/HumbleMediator.csproj \
           -c $(buildConfiguration) \
           --include-symbols \
           --no-build \
-          -o ./dist/
+          -o $(Build.ArtifactStagingDirectory)
       displayName: 'Create build artifact'
-    - task: CopyFiles@2
-      inputs:
-        contents: './dist/*.nupkg'
-        targetFolder: $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
