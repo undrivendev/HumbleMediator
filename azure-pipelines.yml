@@ -39,4 +39,9 @@ stages:
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         artifactName: NuGet
+    - script: |
+        nuget push $(Build.ArtifactStagingDirectory)/*.nupkg \
+        -ApiKey $(NUGET_API_KEY) \
+        -Source $(NUGET_URL)
+      displayName: 'Push to MyGet'
 
