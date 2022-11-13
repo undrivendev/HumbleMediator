@@ -13,6 +13,7 @@
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
     <Copyright>Copyright Luca Dalla Valle</Copyright>
     <MinVerTagPrefix>v</MinVerTagPrefix>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <!--  Setup for deterministic builds and source-linking https://devblogs.microsoft.com/dotnet/producing-packages-with-source-link -->

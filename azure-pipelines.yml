@@ -3,7 +3,7 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-  
+
 variables:
   buildConfiguration: 'Release'
 
@@ -13,7 +13,7 @@ stages:
   - job: BuildAndTestJob
     steps:
     - script: |
-        dotnet build HumbleMediator.sln --configuration $(buildConfiguration) -warnaserror
+        dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
       displayName: 'Build ($(buildConfiguration))'
     - script: |
         dotnet test HumbleMediator.sln \
@@ -44,4 +44,3 @@ stages:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         artifactName: NuGet
 
-          
