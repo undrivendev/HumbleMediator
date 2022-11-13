@@ -9,15 +9,23 @@
     <Product>HumbleMediator</Product>
     <Authors>Luca Dalla Valle</Authors>
     <PackageTags>Mediator;Mediator Pattern;CQRS;CQRS pattern;queries;commands</PackageTags>
-    <Deterministic>true</Deterministic>
-    <Description>
-      HumbleMediator is a simple mediator pattern library for CQRS
-    </Description>
+    <Description>HumbleMediator is a simple mediator pattern library for CQRS</Description>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
     <Copyright>Copyright Luca Dalla Valle</Copyright>
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
+  <!--  Setup for deterministic builds and source-linking https://devblogs.microsoft.com/dotnet/producing-packages-with-source-link -->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!--dependencies -->
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <PackageReference Include="MinVer" Version="4.2.0" PrivateAssets="All"/>
