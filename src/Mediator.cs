@@ -1,31 +1,35 @@
-using HumbleMediator.DependencyInjection;
+using System;
 
 namespace HumbleMediator;
 
 public class Mediator : IMediator
 {
-    private readonly IContainer _container;
+    private readonly Func<Type, object?> _serviceFactory;
 
-    public Mediator(IContainer container)
+    public Mediator(Func<Type, object?> serviceFactory)
     {
-        _container = container;
+        _serviceFactory = serviceFactory;
     }
 
-    public Task<TQueryResult> SendQuery<TQuery, TQueryResult>(
+    public async Task<TQueryResult> SendQuery<TQuery, TQueryResult>(
         TQuery query,
         CancellationToken cancellationToken = default
-    ) where TQuery : IQuery<TQueryResult>
-    {
-        var service = _container.Resolve<IQueryHandler<TQuery, TQueryResult>>();
-        return service.Handle(query, cancellationToken);
-    }
+    ) where TQuery : IQuery<TQueryResult> =>
+        await GetService<IQueryHandler<TQuery, TQueryResult>>().Handle(query, cancellationToken);
 
-    public Task<TCommandResult> SendCommand<TCommand, TCommandResult>(
+    public async Task<TCommandResult> SendCommand<TCommand, TCommandResult>(
         TCommand command,
         CancellationToken cancellationToken = default
-    ) where TCommand : ICommand<TCommandResult>
+    ) where TCommand : ICommand<TCommandResult> =>
+        await GetService<ICommandHandler<TCommand, TCommandResult>>()
+            .Handle(command, cancellationToken);
+
+    private T GetService<T>()
     {
-        var service = _container.Resolve<ICommandHandler<TCommand, TCommandResult>>();
-        return service.Handle(command, cancellationToken);
+        var type = typeof(T);
+        return (T)(
+            _serviceFactory(type)
+            ?? throw new InvalidOperationException($"Service not found for type: {type}")
+        );
     }
 }
