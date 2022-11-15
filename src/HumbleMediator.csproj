@@ -10,7 +10,7 @@
     <Authors>Luca Dalla Valle</Authors>
     <PackageTags>Mediator;Mediator Pattern;CQRS;CQRS pattern;queries;commands</PackageTags>
     <Description>HumbleMediator is a simple mediator pattern library for CQRS</Description>
-    <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright Luca Dalla Valle</Copyright>
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
