@@ -39,9 +39,12 @@ stages:
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         artifactName: NuGet
+      displayName: 'Publish artifacts'
+    - task: NuGetAuthenticate@1
+      displayName: 'NuGet authenticate'
     - script: |
         nuget push $(Build.ArtifactStagingDirectory)/*.nupkg \
-        -ApiKey $(NUGET_API_KEY) \
-        -Source $(NUGET_URL)
-      displayName: 'Push to MyGet'
+        -ApiKey az \
+        -Source $(NUGET_CI_FEED)
+      displayName: 'Push to CI NuGet feed'
 
