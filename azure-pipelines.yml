@@ -6,11 +6,12 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  artifactName: 'NuGet'
 
 stages:
 - stage: BuildAndTest
   jobs:
-  - job: BuildAndTestJob
+  - job: BuildAndTest
     steps:
     - script: |
         dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
@@ -34,11 +35,13 @@ stages:
           --include-symbols \
           --no-build \
           -o $(Build.ArtifactStagingDirectory)
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
       displayName: 'Create build artifact'
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@1
       inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: NuGet
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: $(artifactName)
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
       displayName: 'Publish artifacts'
     - task: NuGetAuthenticate@1
       displayName: 'NuGet authenticate'
@@ -46,5 +49,6 @@ stages:
         nuget push $(Build.ArtifactStagingDirectory)/*.nupkg \
         -ApiKey az \
         -Source $(NUGET_CI_FEED)
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
       displayName: 'Push to CI NuGet feed'
 
