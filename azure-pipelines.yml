@@ -8,47 +8,66 @@ variables:
   buildConfiguration: 'Release'
   artifactName: 'NuGet'
 
-stages:
-- stage: BuildAndTest
-  jobs:
-  - job: BuildAndTest
-    steps:
-    - script: |
-        dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
-      displayName: 'Build ($(buildConfiguration))'
-    - script: |
-        dotnet test HumbleMediator.sln \
-          --configuration $(buildConfiguration) \
-          --no-build \
-          --verbosity Normal \
-          --logger trx
-      displayName: 'Run tests'
-    - task: PublishTestResults@2
-      condition: succeededOrFailed()
-      inputs:
-        testRunner: VSTest
-        testResultsFiles: '**/*.trx'
-      displayName: 'Publish test results'
-    - script: |
-        dotnet pack ./src/HumbleMediator.csproj \
-          -c $(buildConfiguration) \
-          --include-symbols \
-          --no-build \
-          -o $(Build.ArtifactStagingDirectory)
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-      displayName: 'Create build artifact'
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: $(Build.ArtifactStagingDirectory)
-        artifactName: $(artifactName)
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-      displayName: 'Publish artifacts'
-    - task: NuGetAuthenticate@1
-      displayName: 'NuGet authenticate'
-    - script: |
-        nuget push $(Build.ArtifactStagingDirectory)/*.nupkg \
-        -ApiKey az \
-        -Source $(NUGET_CI_FEED)
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-      displayName: 'Push to CI NuGet feed'
-
+steps:
+- task: SonarCloudPrepare@1
+  condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'undrivendev'
+    scannerMode: 'MSBuild'
+    projectKey: 'undrivendev_HumbleMediator'
+    projectName: 'HumbleMediator'
+    extraProperties: |
+      sonar.exclusions=**/obj/**,**/*.dll
+      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+    displayName: 'SonarCloud prepare analysis'
+- script: |
+    dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
+  displayName: 'Build ($(buildConfiguration))'
+- script: |
+    dotnet test HumbleMediator.sln \
+      --configuration $(buildConfiguration) \
+      --no-build \
+      --verbosity Normal \
+      --logger trx \
+      --collect "Code coverage" \
+      -p:CollectCoverage=true \
+      -p:CoverletOutputFormat=opencover%2ccobertura \
+      -p:Exclude="[xunit.*]*%2c[HumbleMediator.Tests.*]*"
+  displayName: 'Run tests'
+- task: SonarCloudAnalyze@1
+  condition: and(succeededOrFailed(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'SonarCloud analysis'
+- task: SonarCloudPublish@1
+  condition: and(succeededOrFailed(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'Publish SonarCloud quality gate result'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+  displayName: 'Publish test results'
+- script: |
+    dotnet pack ./src/HumbleMediator.csproj \
+      -c $(buildConfiguration) \
+      --include-symbols \
+      --no-build \
+      -o $(Build.ArtifactStagingDirectory)
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'Create build artifact'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)
+    artifactName: $(artifactName)
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'Publish artifacts'
+- task: NuGetAuthenticate@1
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'NuGet authenticate'
+- script: |
+    nuget push $(Build.ArtifactStagingDirectory)/*.nupkg \
+    -ApiKey az \
+    -Source $(NUGET_CI_FEED)
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+  displayName: 'Push to CI NuGet feed'

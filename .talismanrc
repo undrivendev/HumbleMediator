@@ -1,4 +1,5 @@
 fileignoreconfig:
 - filename: README.md
   checksum: c23531a410d36fd0970349d2011ae3779a321170fc1f2ee1d26bd5293a89bbf4
-version: ""
+- filename: azure-pipelines.yml
+  checksum: 42cf28832dfb43c7d62d6302bb640cc0beb397a4bf35a70ddba5dfbac8183ee0
