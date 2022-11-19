@@ -21,7 +21,7 @@ steps:
       sonar.exclusions=**/obj/**,**/*.dll
       sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
       sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-    displayName: 'SonarCloud prepare analysis'
+  displayName: 'SonarCloud prepare analysis'
 - script: |
     dotnet build HumbleMediator.sln --configuration $(buildConfiguration)
   displayName: 'Build ($(buildConfiguration))'
