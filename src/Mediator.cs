@@ -2,7 +2,7 @@ using System;
 
 namespace HumbleMediator;
 
-public class Mediator : IMediator
+public sealed class Mediator : IMediator
 {
     private readonly Func<Type, object?> _serviceFactory;
 
