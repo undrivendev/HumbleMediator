@@ -16,7 +16,7 @@ If you like this project, you learned something from it or you are using it in y
 dotnet add package HumbleMediator
 ```
 
-## Configure
+## Usage
 Register the `IMediator` interface with the Dependency Injection container of your choice by creating an instance of the `Mediator` class and pass a `Func<Type, object?>` as a constructor argument.
 
 This delegate should point to the service resolution method of the Dependency Injection container itself.
