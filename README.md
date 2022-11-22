@@ -16,7 +16,7 @@ If you like this project, you learned something from it or you are using it in y
 dotnet add package HumbleMediator
 ```
 
-## Usage
+## Registration
 Register the `IMediator` interface with the Dependency Injection container of your choice by creating an instance of the `Mediator` class and pass a `Func<Type, object?>` as a constructor argument.
 
 This delegate should point to the service resolution method of the Dependency Injection container itself.
@@ -36,9 +36,57 @@ container.Register<IMediator>(() => new Mediator(container.GetInstance), Lifesty
 ```
 container.Register<IMediator>(() => new Mediator((container as IServiceProvider).GetService));
 ```
-## Cross-cutting concerns
-It's possible to implement cross-cutting concerns by leveraging the Decorator pattern on the `IMediator` interface.
+## Usage
+Create the necessary queries and/or commands by marking the DTOs with the appropriate `ICommand<TResult>` or `IQuery<TResult>` interface.
+```
+public record CreateCustomerCommand(Customer Customer) : ICommand<int>;
+```
 
-TODO: more examples
+Create a handler for each of those commands and/or queries by creating the necessary handlers implementing the `ICommandHandler<TCommand, TResult>` or `IQueryHandler<TQuery, TResult>` interfaces.
+```
+public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, int>
+{
+    public async Task<int> Handle(
+        CreateCustomerCommand command,
+        CancellationToken cancellationToken = default
+    )
+    {
+        // Handler logic
+    }
+}
+```
+Call the handlers via the `IMediator` interface.
+```
+public class CustomersController
+{
+    private readonly IMediator _mediator;
+
+    public CustomersController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<int>> Create()
+    {
+        return await _mediator.SendCommand<CreateCustomerCommand, int>(
+            new CreateCustomerCommand(new Customer())
+        );
+    }
+}
+```
+
+## Cross-cutting concerns
+It's possible to implement [cross-cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) by leveraging the [Decorator](https://en.wikipedia.org/wiki/Decorator_pattern) pattern on the `IMediator` interface.
+
+By doing that, you'll be able to extend the default behaviour with some custom logic that will be executed every time the `IMediator` interface is called.
+
+Some examples of cross-cutting concerns could be:
+- Logging
+- Validation
+- Caching
+
+and so on.
+
 ## Samples
 A working example, including an implementation of cross-cutting concerns, can be found in my other project [here](https://github.com/undrivendev/template-webapi-aspnet/blob/main/src/WebApiTemplate.Api/Program.cs#L60).
