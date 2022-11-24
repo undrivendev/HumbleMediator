@@ -14,6 +14,7 @@
     <Copyright>Copyright Luca Dalla Valle</Copyright>
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageIcon>logo128x128.png</PackageIcon>
   </PropertyGroup>
 
   <!--  Setup for deterministic builds and source-linking https://devblogs.microsoft.com/dotnet/producing-packages-with-source-link -->
@@ -25,6 +26,11 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
+
+  <!--logo -->
+  <ItemGroup>
+    <None Include="..\assets\logo\logo128x128.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <!--dependencies -->
   <ItemGroup>
