@@ -15,6 +15,7 @@
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PackageIcon>logo128x128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <!--  Setup for deterministic builds and source-linking https://devblogs.microsoft.com/dotnet/producing-packages-with-source-link -->
@@ -27,9 +28,10 @@
     <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
-  <!--logo -->
+  <!-- NuGet assets -->
   <ItemGroup>
     <None Include="..\assets\logo\logo128x128.png" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <!--dependencies -->
