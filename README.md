@@ -77,9 +77,9 @@ public class CustomersController
 ```
 
 ## Cross-cutting concerns
-It's possible to implement [cross-cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) by leveraging the [Decorator](https://en.wikipedia.org/wiki/Decorator_pattern) pattern on the `IMediator` interface.
+It's possible to implement [cross-cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern) by leveraging the [Decorator](https://en.wikipedia.org/wiki/Decorator_pattern) pattern on the mediator or handler interfaces.
 
-By doing that, you'll be able to extend the default behaviour with some custom logic that will be executed every time the `IMediator` interface is called.
+By doing that, you'll be able to extend the default behavior with some custom logic that will be executed every time a request to the mediator is made.
 
 Some examples of cross-cutting concerns could be:
 - Logging
