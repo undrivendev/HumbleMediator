@@ -89,4 +89,4 @@ Some examples of cross-cutting concerns could be:
 and so on.
 
 ## Samples
-A working example, including an implementation of cross-cutting concerns, can be found in my other project [here](https://github.com/undrivendev/template-webapi-aspnet/blob/main/src/WebApiTemplate.Api/Program.cs#L60).
+A working example in the context of an ASP.NET Web API, including an implementation of cross-cutting concerns, can be found in my [other project](https://github.com/undrivendev/template-webapi-aspnet).
