@@ -1,4 +1,5 @@
 # HumbleMediator
+[![NuGet](https://buildstats.info/nuget/HumbleMediator?includePreReleases=false)](https://www.nuget.org/packages/HumbleMediator)
 [![Build Status](https://dev.azure.com/undrivendev/HumbleMediator/_apis/build/status/undrivendev.HumbleMediator?branchName=main)](https://dev.azure.com/undrivendev/HumbleMediator/_build/latest?definitionId=3&branchName=main)
 [![Azure DevOps tests](https://img.shields.io/azure-devops/tests/undrivendev/HumbleMediator/3/main)](https://dev.azure.com/undrivendev/HumbleMediator/_build/latest?definitionId=3&branchName=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=undrivendev_HumbleMediator&metric=alert_status)](https://sonarcloud.io/summary/overall?id=undrivendev_HumbleMediator)
