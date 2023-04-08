@@ -9,11 +9,11 @@ HumbleMediator is a simple library (~50 lines of code) containing the minimum am
 
 It is designed to leverage the functionality provided by a Dependency Injection container, so if you're not using one in your project, this is not for you.
 
-## Like it? Give a star! :star
+## :star: Like it? Give a star
 If you like this project, you learned something from it or you are using it in your applications, please press the star button. Thanks!
 
 ## Installation
-```
+```sh
 dotnet add package HumbleMediator
 ```
 
@@ -25,26 +25,26 @@ This delegate should point to the service resolution method of the Dependency In
 Some examples:
 
 ### ASP.NET Core
-```
+```csharp
 services.AddSingleton<IMediator>(sp => new Mediator(sp.GetService));
 ```
 
 ### SimpleInjector
-```
+```csharp
 container.Register<IMediator>(() => new Mediator(container.GetInstance), Lifestyle.Singleton);
 ```
 ### Generic IServiceProvider
-```
+```csharp
 container.Register<IMediator>(() => new Mediator((container as IServiceProvider).GetService));
 ```
 ## Usage
 Create the necessary queries and/or commands by marking the DTOs with the appropriate `ICommand<TResult>` or `IQuery<TResult>` interface.
-```
+```csharp
 public record CreateCustomerCommand(Customer Customer) : ICommand<int>;
 ```
 
 Create a handler for each of those commands and/or queries by creating the necessary handlers implementing the `ICommandHandler<TCommand, TResult>` or `IQueryHandler<TQuery, TResult>` interfaces.
-```
+```csharp
 public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, int>
 {
     public async Task<int> Handle(
@@ -57,7 +57,7 @@ public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerComman
 }
 ```
 Call the handlers via the `IMediator` interface.
-```
+```csharp
 public class CustomersController
 {
     private readonly IMediator _mediator;
