@@ -14,13 +14,15 @@ public sealed class Mediator : IMediator
     public async Task<TQueryResult> SendQuery<TQuery, TQueryResult>(
         TQuery query,
         CancellationToken cancellationToken = default
-    ) where TQuery : IQuery<TQueryResult> =>
+    )
+        where TQuery : IQuery<TQueryResult> =>
         await GetService<IQueryHandler<TQuery, TQueryResult>>().Handle(query, cancellationToken);
 
     public async Task<TCommandResult> SendCommand<TCommand, TCommandResult>(
         TCommand command,
         CancellationToken cancellationToken = default
-    ) where TCommand : ICommand<TCommandResult> =>
+    )
+        where TCommand : ICommand<TCommandResult> =>
         await GetService<ICommandHandler<TCommand, TCommandResult>>()
             .Handle(command, cancellationToken);
 

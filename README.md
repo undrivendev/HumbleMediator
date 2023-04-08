@@ -9,7 +9,7 @@ HumbleMediator is a simple library (~50 lines of code) containing the minimum am
 
 It is designed to leverage the functionality provided by a Dependency Injection container, so if you're not using one in your project, this is not for you.
 
-## Like it? Give a star! :star:
+## Like it? Give a star! :star
 If you like this project, you learned something from it or you are using it in your applications, please press the star button. Thanks!
 
 ## Installation
