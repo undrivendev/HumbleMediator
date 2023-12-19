@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HumbleMediator.Tests.Stubs;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace HumbleMediator.Tests.Mediator;
@@ -15,19 +16,16 @@ public class SendCommand
         // Arrange
         const int expectedResult = 67;
         var command = new CommandStub();
-        var mockHandler = new Mock<ICommandHandler<CommandStub, int>>();
-        mockHandler.Setup(e => e.Handle(command, default)).ReturnsAsync(expectedResult);
+        var subHandler = Substitute.For<ICommandHandler<CommandStub, int>>();
+        subHandler.Handle(command).Returns(expectedResult);
 
-        var sut = new HumbleMediator.Mediator(_ => mockHandler.Object);
+        var sut = new HumbleMediator.Mediator(_ => subHandler);
 
         // Act
         var result = await sut.SendCommand<CommandStub, int>(command);
 
         // Assert
-        mockHandler.Verify(
-            e => e.Handle(It.Is<CommandStub>(f => f == command), default),
-            Times.Once
-        );
+        await subHandler.Received(1).Handle(command);
         result.Should().Be(expectedResult);
     }
 
