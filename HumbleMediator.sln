@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumbleMediator", "src\HumbleMediator.csproj", "{48A33C0A-3376-4179-8E78-7B93DFA0CAA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumbleMediator.Tests", "test\HumbleMediator.Tests.csproj", "{DA668C6A-CA6A-4A26-87AE-258438A46BB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumbleMediator.Tests", "tests\HumbleMediator.Tests.csproj", "{DA668C6A-CA6A-4A26-87AE-258438A46BB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{713EEB24-30F6-463B-AD87-477E31AD472C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{713EEB24-30F6-463B-AD87-477E31AD472C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HumbleMediator.Tests.Stubs;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace HumbleMediator.Tests.Mediator;
@@ -15,16 +15,16 @@ public class SendQuery
         // Arrange
         const int expectedResult = 66;
         var query = new QueryStub();
-        var mockHandler = new Mock<IQueryHandler<QueryStub, int>>();
-        mockHandler.Setup(e => e.Handle(query, default)).ReturnsAsync(expectedResult);
+        var subHandler = Substitute.For<IQueryHandler<QueryStub, int>>();
+        subHandler.Handle(query).Returns(expectedResult);
 
-        var sut = new HumbleMediator.Mediator(_ => mockHandler.Object);
+        var sut = new HumbleMediator.Mediator(_ => subHandler);
 
         // Act
         var result = await sut.SendQuery<QueryStub, int>(query);
 
         // Assert
-        mockHandler.Verify(e => e.Handle(It.Is<QueryStub>(f => f == query), default), Times.Once);
+        await subHandler.Received(1).Handle(query);
         result.Should().Be(expectedResult);
     }
 

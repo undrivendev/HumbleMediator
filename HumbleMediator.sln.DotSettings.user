@@ -1,8 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/ldv/.cache/JetBrains/Rider2022.2/resharper-host/temp/Rider/vAny/CoverageData/_HumbleMediator.-397185442/Snapshot/snapshot.utdcvr</s:String>
+	
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f9dce507_002D1598_002D426a_002Dbe4d_002Db4e1196485c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MediatorTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::DA668C6A-CA6A-4A26-87AE-258438A46BB3::net6.0::HumbleMediator.Tests.MediatorTests&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+  &lt;Project Location="/home/ldv/dev/HumbleMediator/tests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;HumbleMediator.Tests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

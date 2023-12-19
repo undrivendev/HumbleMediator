@@ -13,8 +13,8 @@ steps:
   - task: UseDotNet@2
     inputs:
       packageType: "sdk"
-      version: "6.0.x"
-    displayName: "Install sdk 6.0.x"
+      version: "8.0.x"
+    displayName: "Install sdk 8.0.x"
   - task: SonarCloudPrepare@1
     condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
     inputs:
